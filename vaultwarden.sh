@@ -18,17 +18,26 @@ if [ -z "${TARGET_REF:-}" ]; then
     exit 1
 fi
 
-echo "📂 Target submodule directory: $TARGET_REF"
+echo "📦 Target branch and submodule: $TARGET_REF"
 
 # Prepare the Git workspace
-# Tell Git it's safe to operate in the mounted directory and the submodule
 git config --global --add safe.directory /workspace
+
+# Fetch branches and checkout the target branch
+echo "🔄 Fetching repository and checking out branch '$TARGET_REF'..."
+git fetch --all --tags
+git checkout "$TARGET_REF"
+
+# Initialize and pull the submodule code now that we are on the correct branch
+echo "📥 Initializing and updating submodules..."
+git submodule update --init --recursive
+
+# Mark the newly created submodule directory as safe
 git config --global --add safe.directory "/workspace/$TARGET_REF"
 
 # Navigate into the submodule
 if [ ! -d "$TARGET_REF" ]; then
-    echo "❌ ERROR: Submodule directory '$TARGET_REF' not found!"
-    echo "Did the checkout action clone the submodules?"
+    echo "❌ ERROR: Submodule directory '$TARGET_REF' not found after checkout!"
     exit 1
 fi
 
