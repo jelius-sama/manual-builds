@@ -1,0 +1,53 @@
+name: Compile on Amazon Linux 2023
+
+on:
+  push:
+    branches: [ "main" ]
+  # Allows you to trigger this workflow manually from the Actions tab
+  workflow_dispatch: 
+
+jobs:
+  build-and-compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+
+      # Read the filename from payload.txt and append .sh
+      - name: Get script filename from payload
+        id: payload
+        run: |
+          BASE_NAME=$(cat payload.txt | tr -d '[:space:]')
+          SCRIPT_FILE="${BASE_NAME}.sh"
+          echo "Target script: $SCRIPT_FILE"
+          echo "script_file=$SCRIPT_FILE" >> "$GITHUB_OUTPUT"
+
+      # Create a dedicated directory to capture the compiled binaries
+      - name: Prepare output directory
+        run: mkdir -p output_binaries
+
+      # Start the AL2023 container, mount the repo, and run the script
+      - name: Execute script in AL2023
+        run: |
+          BASE_NAME=$(cat payload.txt | tr -d '[:space:]')
+          docker run --rm \
+            -e TARGET_REF="$BASE_NAME" \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            amazonlinux:2023 \
+            /bin/bash -c "
+              chmod +x ${{ steps.payload.outputs.script_file }}
+              ./${{ steps.payload.outputs.script_file }}
+            "
+
+      # Upload the resulting binaries as a downloadable zip artifact
+      - name: Upload Compiled Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: al2023-compiled-binaries
+          path: output_binaries/
+          if-no-files-found: warn
