@@ -65,6 +65,7 @@ if [ -f "target/release/vaultwarden" ]; then
     # Make it executable
     chmod +x ../output_binaries/vaultwarden 
 
+    git rev-parse --short HEAD > ../output_binaries/release_tag.txt
     echo "🎉 Success! Binary saved to output_binaries/vaultwarden"
 else
     echo "❌ ERROR: target/release/vaultwarden not found!"
