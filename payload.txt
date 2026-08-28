@@ -1,1 +1,1 @@
-vaultwarden
+gatus
