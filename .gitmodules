@@ -1,0 +1,3 @@
+[submodule "gatus"]
+	path = gatus
+	url = https://github.com/jelius-sama/gatus.git
