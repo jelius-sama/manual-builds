@@ -94,7 +94,7 @@ if [ -f "gatus" ]; then
     # Make it executable
     chmod +x ../output_binaries/gatus
 
-    git rev-parse --short HEAD > ../output_binaries/release_tag.txt
+    echo "${TARGET_REF}-$(git rev-parse --short HEAD)" > ../output_binaries/release_tag.txt
     echo "🎉 Success! Binary saved to output_binaries/gatus"
 else
     echo "❌ ERROR: gatus not found!"
