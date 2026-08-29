@@ -82,6 +82,7 @@ fi
 git fetch origin && git checkout ui/group-state-master
 
 # Compile gatus
+make frontend-build
 GOOS=linux GOARCH=amd64 make install
 
 # Process the Output
