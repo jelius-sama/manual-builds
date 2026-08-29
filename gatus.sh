@@ -82,7 +82,7 @@ fi
 git fetch origin && git checkout ui/group-state-master
 
 # Compile gatus
-dnf install nodejs22
+dnf -y install nodejs22
 make frontend-install
 make frontend-build
 GOOS=linux GOARCH=amd64 make install
