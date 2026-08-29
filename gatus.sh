@@ -79,6 +79,8 @@ if ! go version; then
     exit 1
 fi
 
+git fetch origin && git checkout ui/group-state-master
+
 # Compile gatus
 GOOS=linux GOARCH=amd64 make install
 
