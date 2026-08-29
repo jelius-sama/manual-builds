@@ -48,6 +48,9 @@ echo "🦀 Installing Rust via rustup..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source "$HOME/.cargo/env"
 
+# Checkout the branch/tag we need to build
+git fetch origin && git checkout 1.37.2
+
 # Compile Vaultwarden
 echo "🏗️ Starting cargo build (sqlite, release) inside $TARGET_REF..."
 echo "⏳ This may take a while..."

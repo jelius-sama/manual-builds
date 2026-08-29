@@ -79,7 +79,9 @@ if ! go version; then
     exit 1
 fi
 
-# git fetch origin && git checkout ui/group-state-master
+# Checkout the branch/tag we need to build
+# main branch is not stable and has added features that differ from the original source
+git fetch origin && git checkout main
 
 # Compile gatus
 dnf -y install nodejs22
