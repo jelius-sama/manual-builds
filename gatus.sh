@@ -79,7 +79,7 @@ if ! go version; then
     exit 1
 fi
 
-git fetch origin && git checkout ui/group-state-master
+# git fetch origin && git checkout ui/group-state-master
 
 # Compile gatus
 dnf -y install nodejs22
