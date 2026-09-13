@@ -49,7 +49,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source "$HOME/.cargo/env"
 
 # Checkout the branch/tag we need to build
-git fetch origin && git checkout 1.37.2
+git fetch origin && git checkout 1.37.3
 
 # Compile Vaultwarden
 echo "🏗️ Starting cargo build (sqlite, release) inside $TARGET_REF..."
