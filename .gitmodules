@@ -1,0 +1,3 @@
+[submodule "gallery-dl"]
+	path = gallery-dl
+	url = https://codeberg.org/mikf/gallery-dl.git
